@@ -19,22 +19,21 @@
   <meta name="author" content="西城风雨楼">
   <meta name="keywords" content="">
   
-    <meta name="description" content="欢迎来到西城风雨楼的技术博客，这里是关于技术、生活、随笔的博客。">
+    <meta name="description" content="一、mybatis基础用法 获取mybatis-config.xml文件的输入流 创建SqlSessionFactory对象，该对象接受mybatis-config.xml的输入流作为参数 通过SqlSessionFactory对象创建SqlSession 通过SqlSession获取对应的Mapper 通过Mapper执行具体的SQL语句完成数据库的增删改查  12345678910111213">
 <meta property="og:type" content="article">
-<meta property="og:title" content="01-基于xml的bean解析过程">
-<meta property="og:url" content="https://xcfyl.github.io/2025/06/08/spring%E5%AD%A6%E4%B9%A0/spring%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/01-%E5%9F%BA%E4%BA%8Exml%E7%9A%84bean%E8%A7%A3%E6%9E%90%E8%BF%87%E7%A8%8B/index.html">
+<meta property="og:title" content="01-mybatis配置解析过程">
+<meta property="og:url" content="https://xcfyl.github.io/2025/06/14/mybatis%E5%AD%A6%E4%B9%A0/mybatis%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/01-mybatis%E9%85%8D%E7%BD%AE%E8%A7%A3%E6%9E%90%E8%BF%87%E7%A8%8B/index.html">
 <meta property="og:site_name" content="西城风雨楼的博客">
-<meta property="og:description" content="欢迎来到西城风雨楼的技术博客，这里是关于技术、生活、随笔的博客。">
+<meta property="og:description" content="一、mybatis基础用法 获取mybatis-config.xml文件的输入流 创建SqlSessionFactory对象，该对象接受mybatis-config.xml的输入流作为参数 通过SqlSessionFactory对象创建SqlSession 通过SqlSession获取对应的Mapper 通过Mapper执行具体的SQL语句完成数据库的增删改查  12345678910111213">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2025-06-08T14:11:46.000Z">
-<meta property="article:modified_time" content="2025-06-08T14:12:06.197Z">
+<meta property="article:published_time" content="2025-06-14T08:15:21.000Z">
+<meta property="article:modified_time" content="2025-06-14T08:26:01.014Z">
 <meta property="article:author" content="西城风雨楼">
-<meta property="article:tag" content="spring">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>01-基于xml的bean解析过程 - 西城风雨楼的博客</title>
+  <title>01-mybatis配置解析过程 - 西城风雨楼的博客</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -213,7 +212,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="01-基于xml的bean解析过程"></span>
+            <span id="subtitle" data-typed-text="01-mybatis配置解析过程"></span>
           
         </div>
 
@@ -224,8 +223,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-06-08 22:11" pubdate>
-          2025年6月8日 晚上
+        <time datetime="2025-06-14 16:15" pubdate>
+          2025年6月14日 下午
         </time>
       </span>
     
@@ -236,7 +235,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          0 字
+          291 字
         
       </span>
     
@@ -247,7 +246,7 @@
         
         
         
-          1 分钟
+          3 分钟
         
       </span>
     
@@ -293,12 +292,22 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">01-基于xml的bean解析过程</h1>
+            <h1 id="seo-header">01-mybatis配置解析过程</h1>
             
             
               <div class="markdown-body">
                 
-                
+                <h1 id="一、mybatis基础用法"><a href="#一、mybatis基础用法" class="headerlink" title="一、mybatis基础用法"></a>一、mybatis基础用法</h1><ol>
+<li>获取mybatis-config.xml文件的输入流</li>
+<li>创建SqlSessionFactory对象，该对象接受mybatis-config.xml的输入流作为参数</li>
+<li>通过SqlSessionFactory对象创建SqlSession</li>
+<li>通过SqlSession获取对应的Mapper</li>
+<li>通过Mapper执行具体的SQL语句完成数据库的增删改查</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment">* <span class="hljs-doctag">@author</span> 西城风雨楼</span><br><span class="hljs-comment">* <span class="hljs-doctag">@date</span> create at 2025/3/8 18:35</span><br><span class="hljs-comment">*/</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MybatisStartTest</span> &#123;<br>  <span class="hljs-meta">@Test</span><br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">test</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> IOException &#123;<br>    <span class="hljs-comment">// 利用classLoader加载类路径下面的资源，获得资源输入流</span><br>    <span class="hljs-type">InputStream</span> <span class="hljs-variable">inputStream</span> <span class="hljs-operator">=</span> Resources.getResourceAsStream(<span class="hljs-string">&quot;org/apache/ibatis/mytest/mapper/demo1/mybatis-config.xml&quot;</span>);<br>    <span class="hljs-comment">// 加载配置文件</span><br>    <span class="hljs-type">SqlSessionFactory</span> <span class="hljs-variable">factory</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SqlSessionFactoryBuilder</span>().build(inputStream);<br><br>    <span class="hljs-comment">// 获取SqlSession</span><br>    <span class="hljs-keyword">try</span> (<span class="hljs-type">SqlSession</span> <span class="hljs-variable">session</span> <span class="hljs-operator">=</span> factory.openSession()) &#123;<br>        <span class="hljs-type">UserMapper</span> <span class="hljs-variable">mapper</span> <span class="hljs-operator">=</span> session.getMapper(UserMapper.class);<br>        <span class="hljs-type">User</span> <span class="hljs-variable">user</span> <span class="hljs-operator">=</span> mapper.selectUserById(<span class="hljs-number">1</span>);<br>        System.out.println(user.getName());<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h1 id="二、配置解析流程"><a href="#二、配置解析流程" class="headerlink" title="二、配置解析流程"></a>二、配置解析流程</h1><p>SqlSessionFactory的默认实现类是DefaultSqlSessionFactory，DefaultSqlSessionFactory中定义了Configuration对象，Configuration对象实际上就是mybatis-config.xml配置信息的java对象的载体，程序启动时通过解析mybatis-config.xml文件中的内容，从而创建Configuration对象，下面对Configuraion对象的创建过程进行拆解，首先会介绍Configuration对象中的内容，然后介绍该对象的创建过程，并对该对象创建过程中依赖的其他关键对象和程序流程进行拆解。</p>
+<h2 id="2-1-Configuration对象初识"><a href="#2-1-Configuration对象初识" class="headerlink" title="2.1 Configuration对象初识"></a>2.1 Configuration对象初识</h2>
                 
               </div>
             
@@ -306,34 +315,6 @@
             <div>
               <div class="post-metas my-3">
   
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/spring%E5%AD%A6%E4%B9%A0/" class="category-chain-item">spring学习</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
-  
-  
-    <div class="post-meta">
-      <i class="iconfont icon-tags"></i>
-      
-        <a href="/tags/spring/" class="print-no-link">#spring</a>
-      
-    </div>
   
 </div>
 
@@ -343,8 +324,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>01-基于xml的bean解析过程</div>
-      <div>https://xcfyl.github.io/2025/06/08/spring学习/spring源码学习/01-基于xml的bean解析过程/</div>
+      <div>01-mybatis配置解析过程</div>
+      <div>https://xcfyl.github.io/2025/06/14/mybatis学习/mybatis源码学习/01-mybatis配置解析过程/</div>
     </div>
     <div class="license-meta">
       
@@ -356,7 +337,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年6月8日</div>
+          <div>2025年6月14日</div>
         </div>
       
       
@@ -388,18 +369,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/06/14/mybatis%E5%AD%A6%E4%B9%A0/mybatis%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/01-mybatis%E9%85%8D%E7%BD%AE%E8%A7%A3%E6%9E%90%E8%BF%87%E7%A8%8B/" title="01-mybatis配置解析过程">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">01-mybatis配置解析过程</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/06/08/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/01-%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" title="01-快速排序算法">
-                        <span class="hidden-mobile">01-快速排序算法</span>
+                      <a href="/2025/06/08/spring%E5%AD%A6%E4%B9%A0/spring%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/01-%E5%9F%BA%E4%BA%8Exml%E7%9A%84bean%E8%A7%A3%E6%9E%90%E8%BF%87%E7%A8%8B/" title="01-基于xml的bean解析过程">
+                        <span class="hidden-mobile">01-基于xml的bean解析过程</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
